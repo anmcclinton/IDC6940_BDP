@@ -1,0 +1,201 @@
+---
+title: "Summaries Week 3"
+format: html
+editor: visual
+---
+
+## Summary #1
+
+["C:\\Users\\Adasia McClinton\\Downloads\\DaviesMeteyard_MixedModels_Revised213012020.pdf"](%22C:\Users\Adasia%20McClinton\Downloads\DaviesMeteyard_MixedModels_Revised213012020.pdf%22)
+
+-   Adoption of LMMs:
+
+    -   Linear Mixed-effects Models (LMMs) are increasingly used in psychological science for analyzing complex, hierarchical data, such as repeated measures or multi-stage sampling designs.
+
+    -   LMMs account for both fixed effects (predictable factors) and random effects (variability between participants or stimuli), which traditional methods like ANOVA do not handle as effectively.
+
+-   Key Advantages of LMMs:
+
+    -   Allow modeling of individual differences in responses across participants and stimuli.
+
+    -   Handle data with missing values or unbalanced designs better than traditional methods.
+
+    -   Provide flexibility in estimating both fixed and random effects simultaneously.
+
+-   Challenges and Concerns:
+
+    -   The rapid adoption of LMMs has led to inconsistent application, with researchers facing difficulties in selecting the right model structure (e.g., random slopes vs. random intercepts).
+
+    -   Many researchers lack formal training in LMMs, resulting in uncertainty about model specification, convergence issues, and the interpretation of random effects.
+
+    -   Concerns over the novelty of LMMs, with limited consensus on standardized reporting or best practices across the field.
+
+-   Survey Findings:
+
+    -   Survey of 163 researchers showed:
+
+        -   91% had used LMMs, with most learning through workshops (68%) or self-teaching (30%).
+
+        -   Common challenges included a lack of standardized procedures (26%), model specification difficulties (25%), and inadequate knowledge (18%).
+
+    -   The review of 400 papers revealed significant variation in reporting practices, with many papers omitting key information like model comparison, convergence details, and random effects structures.
+
+-   Best Practice Recommendations:
+
+    -   Transparent Reporting: Researchers should clearly document their model structures (e.g., which random and fixed effects were included) and the rationale behind model selection.
+
+    -   Complete Output: Report confidence intervals, p-values, model likelihood, and F-tests when appropriate. Providing full model outputs ensures that results can be replicated and reanalyzed.
+
+    -   Preferred Reporting Formats: Use tables for clarity and ease of comparison, with written descriptions or plots as supplementary for more complex models.
+
+    -   Model Comparisons: Compare LMM results to traditional methods like ANOVA, noting any differences in significance or effect size. LMMs are often more sensitive but can sometimes be more conservative depending on random effect structures.
+
+-   Common Pitfalls:
+
+    -   Overuse or misinterpretation of random effects, leading to convergence issues.
+
+    -   Failure to specify random slopes, which can reduce the accuracy of fixed effect estimates.
+
+    -   Lack of model validation or simplification when models fail to converge.
+
+-   Concerns in the Discipline:
+
+    -   73% of survey respondents raised concerns about the misuse of LMMs in the field, particularly when researchers do not fully understand the technique or when reporting is inconsistent.
+
+    -   The flexibility of LMMs can lead to “researcher degrees of freedom,” increasing the risk of overfitting or p-hacking.
+
+-   Future Directions:
+
+    -   The paper advocates for the establishment of standardized guidelines for implementing and reporting LMMs, ensuring that research remains reproducible.
+
+    -   Encourages the sharing of data and analysis code to facilitate collaboration and verification of model results, fostering more rigorous scientific practices.
+
+-   Conclusion:
+
+    -   LMMs are powerful tools but require careful application. By adhering to best practice guidelines and promoting transparency in reporting, researchers can avoid inconsistencies and ensure the replicability of their findings in psychological science.
+
+## Summary #2
+
+["C:\\Users\\Adasia McClinton\\Downloads\\LinearMixedModels_JDS_Dec2010.pdf"](%22C:\Users\Adasia%20McClinton\Downloads\LinearMixedModels_JDS_Dec2010.pdf%22)
+
+-   Definition of Mixed Effects Models:
+
+    -   Mixed effects models include both fixed effects (constant across individuals) and random effects (vary between individuals/groups).
+
+    -   The distinction between fixed and random effects is context-dependent and sometimes unclear, but generally, fixed effects are consistent across all groups, while random effects vary.
+
+-   Applications of Mixed Models:
+
+    -   Used in hierarchical or nested data structures (e.g., students within classes, classes within schools).
+
+    -   Repeated measures on the same individuals over time can be treated as random effects.
+
+-   Linear Mixed Effects Models (LMMs):
+
+    -   LMMs model the relationship between a dependent variable and predictor variables, incorporating both fixed and random effects.
+
+    -   Similar to a General Linear Model, but with added complexity to account for random variability between groups or subjects.
+
+-   Example Model:
+
+    -   The model presented uses fictional data where the outcome variable, Extroversion, is predicted by fixed effects: Openness to new experiences, Agreeableness, Social engagement, and a categorical variable, Class.
+
+    -   The random effect is nested, with Class within School.
+
+-   lme4 Package:
+
+    -   The lme4 package in R is commonly used for linear mixed models. The key functions include:
+
+        -   `lmer()` for fitting linear mixed models.
+
+        -   `glmer()` for generalized linear mixed models.
+
+        -   `nlmer()` for nonlinear mixed models.
+
+-   Model Fitting and Output:
+
+    -   A linear mixed model (`lmm.2`) is fit using the `lmer()` function, specifying both fixed and random effects.
+
+    -   Key outputs include:
+
+        -   Fixed effects coefficients, which show the relationship between predictors and the outcome.
+
+        -   Random effects estimates, which show the variability due to the grouping structure (e.g., variability across schools or classes).
+
+-   Random Effects Variance:
+
+    -   The variance components of random effects help determine their significance.
+
+    -   The proportion of variance attributed to random effects is assessed to decide if mixed models are appropriate.
+
+-   Intra-Class Correlation (ICC):
+
+    -   ICC is used to measure the reliability of the grouping structure, indicating how much of the total variance can be attributed to group membership.
+
+-   Markov Chain Monte Carlo (MCMC):
+
+    -   MCMC methods can be used to estimate parameters in LMMs, providing an empirical distribution of parameter estimates, also known as the posterior distribution.
+
+-   Model Comparison:
+
+    -   Models can be compared using information criteria like AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion). Lower values indicate better model fit.
+
+-   Interpretation of Fixed and Random Effects:
+
+    -   Fixed effects are interpreted similarly to regression coefficients.
+
+    -   Random effects are considered in terms of their contribution to the overall variance and reliability of group-level estimates.
+
+-   Model Diagnostics:
+
+    -   Residuals from the model can be analyzed to assess model fit and check for normality.
+
+-   Key Considerations:
+
+    -   Proper reporting of LMMs includes clearly specifying the model structure and providing detailed summaries of both fixed and random effects.
+
+    -   Model validation involves checking convergence and comparing models using appropriate criteria.
+
+## Summary #3
+
+["C:\\Users\\Adasia McClinton\\Downloads\\BU-1340-MA.pdf"](%22C:\Users\Adasia%20McClinton\Downloads\BU-1340-MA.pdf%22)
+
+-   Generalized Linear Mixed Models (GLMMs):
+
+    -   GLMMs generalize linear models by allowing for non-normally distributed responses, non-linear links between response mean and predictors, and correlated data using random effects.
+
+    -   GLMMs include two key models: Linear Mixed Models (LMMs) and Generalized Linear Models (GLMs).
+
+-   Applications of GLMMs:
+
+    -   Useful for binary, count, and other non-normal data.
+
+    -   Capable of addressing overdispersion, correlation, and random effects in data (e.g., repeated measures, longitudinal studies).
+
+-   Example:
+
+    -   In an asthma study, predictors like air pollution and individual susceptibility are used to model asthma attacks (binary response).
+
+    -   GLMMs model both individual susceptibility and correlation between repeated measures on the same child.
+
+-   Estimation Methods:
+
+    -   Maximum Likelihood (ML): Common for LMMs and GLMs but difficult for complex GLMMs due to high-dimensional integrals.
+
+    -   Generalized Estimating Equations (GEEs): Computationally simpler but less flexible, primarily used in longitudinal data analysis.
+
+    -   Penalized Quasi-Likelihood (PQL): Approximation method for random effects models, works well for near-normal data but not for highly non-normal data (e.g., binary).
+
+-   Fixed vs. Random Effects:
+
+    -   The decision of whether to treat factors as fixed or random depends on whether they represent levels of interest or are drawn from a broader population.
+
+-   Challenges:
+
+    -   Computational difficulties: Estimation methods, especially ML, can be complex for large models.
+
+    -   Research focus: Ongoing research on better estimation methods, including simulation-based approaches like MCMC (Markov Chain Monte Carlo).
+
+-   Conclusion:
+
+    -   GLMMs offer flexibility in modeling a wide range of data but face challenges in computation and small sample performance. Despite this, they are increasingly useful as methods and software continue to evolve.
