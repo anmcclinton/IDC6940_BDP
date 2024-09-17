@@ -3,6 +3,7 @@ title: "Literature Review"
 name: "Dasia McClinton"
 format: html
 editor: visual
+self_contained: true
 ---
 
 ## Goal
