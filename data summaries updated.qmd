@@ -1,0 +1,83 @@
+---
+title: "Dataset Summaries"
+author: "Dasia McClinton"
+format:
+  html:
+    self_contained: true
+---
+
+## Dataset Summary: Mental Health in Tech Survey
+
+-   **Overview:**
+
+    -   This dataset is derived from a 2014 survey measuring attitudes toward mental health and the prevalence of mental health disorders in the technology workplace.
+
+    -   Encourages further analysis with data from an ongoing 2016 survey.
+
+-   **Content:**
+
+    -   Includes responses on various aspects related to mental health in the workplace, such as:
+
+        -   **Timestamp:** Date and time of the survey response.
+
+        -   **Demographics:** Age, gender, country, and state (for U.S. respondents).
+
+        -   **Employment Details:** Self-employment status, number of employees at the organization, remote work status, and whether the employer is a tech company.
+
+        -   **Mental Health Treatment:** Family history of mental illness, treatment-seeking behavior, and perceived interference of mental health conditions with work.
+
+        -   **Employer Policies:** Availability of mental health benefits, care options, wellness programs, and resources for seeking help.
+
+        -   **Anonymity and Leave:** Protection of anonymity in treatment resources and ease of taking medical leave for mental health issues.
+
+        -   **Consequences and Support:** Perceived negative consequences of discussing mental health with employers or coworkers, willingness to discuss mental health issues, and observations of consequences for others.
+
+        -   **Comments:** Additional notes from respondents.
+
+-   **Purpose:**
+
+    -   To analyze the mental health landscape in the tech industry and inform policies and practices that support mental health awareness and treatment in the workplace.
+
+```{r}
+library(readr)
+survey <- read_csv("survey.csv")
+head(survey)
+```
+
+### Dataset Summary: MRI and Alzheimer's (Longitudinal Data)
+
+-   **Overview:**
+
+    -   The dataset is part of the Open Access Series of Imaging Studies (OASIS), aimed at providing MRI brain data to the scientific community to advance neuroscience research.
+
+-   **Content:**
+
+    -   **Longitudinal MRI Data:**
+
+        -   Comprises 150 subjects aged 60 to 96 with scans taken on two or more occasions, spaced at least one year apart (totaling 373 imaging sessions).
+
+        -   Subjects include both men and women, all right-handed.
+
+        -   72 subjects remained nondemented throughout the study.
+
+        -   64 subjects were characterized as demented at the initial visit and remained so for subsequent scans, including 51 individuals with mild to moderate Alzheimer’s disease.
+
+        -   14 subjects transitioned from nondemented to demented during the study.
+
+-   **Variables:**
+
+    -   Key attributes include Subject ID, MRI ID, group classification (demented/nondemented), visit number, age, education level (EDUC), socioeconomic status (SES), Mini-Mental State Examination (MMSE) scores, Clinical Dementia Rating (CDR), estimated total intracranial volume (eTIV), normalized whole brain volume (nWBV), and atrophy scaling factor (ASF).
+
+-   **Research Implications:**
+
+    -   The dataset is intended to facilitate research into dementia and Alzheimer’s disease, particularly in predictive modeling and understanding disease progression.
+
+-   **Acknowledgements:**
+
+    -   Researchers are encouraged to acknowledge specific grant numbers when publishing findings based on this dataset.
+
+```{r}
+library(readr)
+oasis_longitudinal <- read_csv("oasis_longitudinal.csv")
+head(oasis_longitudinal)
+```
