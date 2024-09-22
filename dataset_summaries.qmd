@@ -1,8 +1,9 @@
 ---
 title: "Dataset Summaries"
-format: html
-editor: visual
-self_contained: true
+author: "Dasia McClinton"
+format:
+  html:
+    self_contained: true
 ---
 
 ### Dataset Summary: Mental Health in Tech Survey
