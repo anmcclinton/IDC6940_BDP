@@ -1,0 +1,42 @@
+---
+title: "Linear Mixed Models"
+subtitle: "IDC 6940"
+author: "BDP: Bess T., Dasia M., Preethi R."
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: false
+format: 
+  revealjs:
+    theme: dark
+    embed-resources: true
+    slide-number: false
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+pdf-separate-fragments: true
+fig-align: center
+---
+
+## Literature Review 
+
+-   **Linear Mixed Models**: Extend simple linear models by including both **fixed** and **random effects**, ideal for **hierarchical** and **longitudinal data** (Bruin, 2006; Bates, 2014).
+
+-   **Fixed vs. Random Effects**:
+
+    -   **Fixed Effects**: Capture overall population trends (Gelman & Hill, 2007).
+
+    -   **Random Effects**: Model individual variability over time (Baayen et al., 2008).
+
+-   **Covariance Structure**: Choosing the right structure (e.g., **AR(1)** for time-related correlations) is essential for modeling repeated measures (Starkweather, 2010).
+
+-   **Limitations of Traditional Methods**:
+
+    -   Traditional models assume **independence** and may exclude data through **listwise deletion** (Barr, 2008; Enders, 2010).
+
+-   **Robust Estimation**: Composite robust estimators improve model accuracy when handling **outliers** (Agostinelli, 2016).
+
+##  References
