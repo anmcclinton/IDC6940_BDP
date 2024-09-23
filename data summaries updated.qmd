@@ -36,7 +36,7 @@ format:
 
 -   **Purpose:**
 
-    -   To analyze the mental health landscape in the tech industry and inform policies and practices that support mental health awareness and treatment in the workplace.
+    -   To analyze the mental health landscape in the tech industry and inform policies and practices that support mental health awareness and treatment in the workplace
 
 ```{r}
 library(readr)
