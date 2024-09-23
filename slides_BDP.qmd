@@ -40,3 +40,19 @@ fig-align: center
 -   **Robust Estimation**: Composite robust estimators improve model accuracy when handling **outliers** (Agostinelli, 2016).
 
 ##  References
+
+1.  Agostinelli, C., & Yohai, V. J. (2016). Composite robust estimators for linear mixed models. *Journal of the American Statistical Association*, 111(516), 1764-1774. <https://doi.org/10.1080/01621459.2015.1115358>
+
+2.  Bates, D. (2014). Fitting linear mixed-effects models using lme4. arXiv preprint arXiv:1406.5823.
+
+3.  Baayen, R. H., Davidson, D. J., & Bates, D. M. (2008). Mixed-effects modeling with crossed random effects for subjects and items. *Journal of Memory and Language*, 59(4), 390-412.
+
+4.  Barr, D. J., Levy, R., Scheepers, C., & Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. *Journal of Memory and Language*, 68(3), 255-278.
+
+5.  Bruin, J. (2006). newtest: command to compute new test. UCLA: Statistical Consulting Group. <https://stats.oarc.ucla.edu/stata/ado/analysis/>.
+
+6.  Enders, C. K. (2010). *Applied Missing Data Analysis*. Guilford Press.
+
+7.  Gelman, A., & Hill, J. (2007). *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.
+
+8.  Starkweather, J. (2010). Linear mixed effects modeling using R. Unpublished Manuscript.
