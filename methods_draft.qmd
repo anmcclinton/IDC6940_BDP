@@ -1,0 +1,54 @@
+---
+title: "The Impact of Aging on Cognitive Decline: A Longitudinal Study Using Linear Mixed Models"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Methods
+
+**Study Design**\
+We aimed to test the longitudinal effects of age on cognitive change in a cohort of aging participants, specifically examining how MMSE performance, an index of cognition, shifted with each year of age. The longitudinal analysis tracked changes in MMSE scores over time within participants.
+
+**Data and Sample**\
+We conducted analyses using the OASIS longitudinal dataset, which includes multiple assessments for each participant across several time points. The primary outcome was the MMSE (Mini-Mental State Examination) score, a 30-point measure of global cognitive function, where higher scores indicate better neuropsychological performance.
+
+We included data for participants who were assessed at least once with the MMSE and had baseline information on age. These elderly participants represent a broad age range, allowing us to explore the influence of age on cognitive function.
+
+**Measures**
+
+-   MMSE: A continuous 30-point measure of cognitive function.
+
+-   Age: The primary predictor, measured in years, to assess its effect on cognitive performance.
+
+**Statistical Analysis**
+
+\
+**Linear Mixed Model (LMM)**\
+Age was treated as a continuous predictor of MMSE scores in a linear mixed model (LMM), which included a random intercept to account for individual variability. Age was specified as a fixed effect, and repeated measures over time for each subject were handled using random effects.
+
+The LMM is represented as follows:
+
+$$
+MMSE_{ij} = \beta_0 + \beta_1 \cdot \text{Age}_{ij} + u_i + \epsilon_{ij}
+$$
+
+where:
+
+-   \\( MMSE\_{ij} \\) represents the MMSE score for individual \\( i \\) at time \\( j \\),
+-   \\( \\beta_0 \\)is the fixed intercept (average baseline MMSE score),
+-   \\( \\beta_1 \\) is the fixed effect of age (the change in MMSE per one-year increase in age),
+-   \\( u_i \\) is the random intercept, capturing individual-specific differences in baseline cognitive performance,
+-   \\( \\epsilon\_{ij} \\) is the residual error.
+
+The LMM assumes:
+
+-   **Linearity**: The relationship between age and MMSE is linear.
+-   **Normality**: The residuals \\(\\epsilon\_{ij}\\) are normally distributed.
+-   **Homoscedasticity:** The variance of residuals is constant over age.
+-   **Random Effects**: The individual-specific intercepts \\( u_i\\) follow a normal distribution with mean zero and variance \\(\\sigma_u\^2\\).
+
+These assumptions were tested using model diagnostics, including residual plots and normality checks for random effects.
+
+**Software**\
+The analyses were conducted in **R** using the `lme4` package to fit the linear mixed model. Model diagnostics were performed to ensure that the assumptions of the model were satisfied.
