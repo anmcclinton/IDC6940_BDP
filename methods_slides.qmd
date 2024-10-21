@@ -1,0 +1,52 @@
+---
+title: "The Impact of Age on Cognitive Decline: A Longitudinal Study Using Linear Mixed Models"
+author: "Adasia McClinton"
+format: revealjs
+editor: visual
+---
+
+------------------------------------------------------------------------
+
+## Why Use a Linear Mixed Model (LMM)?
+
+-   **Purpose**: To model cognitive decline over time using MMSE scores in a longitudinal dataset.
+
+-   **Why LMM?**:
+
+    -   Fixed Effects: Capture overall effects of predictors (e.g., age).
+    -   Random Effects: Account for individual variability across repeated measures.
+
+------------------------------------------------------------------------
+
+## Mathematical Foundations
+
+-   **General LMM Equation**:
+
+$$ 
+  Y = X\beta + Z u + \epsilon$$
+
+-   Y: Response vector (MMSE scores)\
+
+-   X : Design matrix for fixed effects (e.g., age)\
+
+-   β: Vector of fixed effects (e.g., age's effect on MMSE)\
+
+-   Z : Design matrix for random effects (subject-level variability)\
+
+-   u : Vector of random effects (individual differences)\
+
+-   ϵ : Residual errors
+
+-   **Estimation Method**: Restricted Maximum Likelihood (REML) to reduce bias in variance components.
+
+------------------------------------------------------------------------
+
+## Assumptions and Implementation
+
+-   **Assumptions**:
+    -   Linearity
+    -   Normality of residuals
+    -   Independence of random effects and residuals
+-   **Software: R (`lme4` package)**:
+    -   Diagnostic checks to verify assumptions
+    -   Visualized results using 'ggplot2'

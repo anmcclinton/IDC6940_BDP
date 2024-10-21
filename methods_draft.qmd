@@ -5,50 +5,51 @@ editor: visual
 self-contained: true
 ---
 
-## Methods
+# 2 Methods
 
-**Study Design**\
-We aimed to test the longitudinal effects of age on cognitive change in a cohort of aging participants, specifically examining how MMSE performance, an index of cognition, shifted with each year of age. The longitudinal analysis tracked changes in MMSE scores over time within participants.
+As discussed by Brown (2021) and others, a Linear Mixed Model (LMM) is:
 
-**Data and Sample**\
-We conducted analyses using the OASIS longitudinal dataset, which includes multiple assessments for each participant across several time points. The primary outcome was the MMSE (Mini-Mental State Examination) score, a 30-point measure of global cognitive function, where higher scores indicate better neuropsychological performance.
+*a parametric linear model for clustered, longitudinal, or repeated-measures data that quantifies the relationships between a continuous dependent variable and various predictor variables. LMMs typically consist of fixed-effect parameters, which are associated with one or more covariates, and random effects, which account for variability across different clusters or subjects.*
 
-We included data for participants who were assessed at least once with the MMSE and had baseline information on age. These elderly participants represent a broad age range, allowing us to explore the influence of age on cognitive function.
+In the context of this study, fixed-effect parameters describe the relationship of the covariates (such as age) to the dependent variable (MMSE score) across the entire population. Meanwhile, random effects account for individual variability across participants. This structure allows us to model both within-subject (repeated measures) and between-subject (individual) variations.
 
-**Measures**
+The dataset used in this study contains longitudinal data, where the MMSE score, our continuous dependent variable, is measured at multiple time points for each participant. Longitudinal data often require careful handling due to issues like participant dropout, which can cause later time points to have fewer observations compared to earlier ones. Alongside this, the hierarchical nature of longitudinal data makes it suitable for analysis using LMMs, which can model such structured dependencies.
 
--   MMSE: A continuous 30-point measure of cognitive function.
+## 2.1 Mathematical Foundation
 
--   Age: The primary predictor, measured in years, to assess its effect on cognitive performance.
-
-**Statistical Analysis**
-
-\
-**Linear Mixed Model (LMM)**\
-Age was treated as a continuous predictor of MMSE scores in a linear mixed model (LMM), which included a random intercept to account for individual variability. Age was specified as a fixed effect, and repeated measures over time for each subject were handled using random effects.
-
-The LMM is represented as follows:
+LMMs rely on a strong mathematical foundation based on linear algebra. The general formulation for a 2-level longitudinal model, as applied in this study, is given by the following equation:
 
 $$
-MMSE_{ij} = \beta_0 + \beta_1 \cdot \text{Age}_{ij} + u_i + \epsilon_{ij}
+Y = X\beta + Z u + \epsilon
 $$
 
-where:
+Where:
 
--   \\( MMSE\_{ij} \\) represents the MMSE score for individual \\( i \\) at time \\( j \\),
--   \\( \\beta_0 \\)is the fixed intercept (average baseline MMSE score),
--   \\( \\beta_1 \\) is the fixed effect of age (the change in MMSE per one-year increase in age),
--   \\( u_i \\) is the random intercept, capturing individual-specific differences in baseline cognitive performance,
--   \\( \\epsilon\_{ij} \\) is the residual error.
+-   Y is the response vector, representing the dependent variable (MMSE scores).
+
+-   X is the design matrix for fixed effects (such as age and gender).
+
+-   \\( \\beta \\) is the vector of fixed effects, representing the population-level parameters.
+
+-   Z is the design matrix for random effects (subject-level variability).
+
+-   u is the vector of random effects, which accounts for individual variability.
+
+-   ϵ is the vector of residual errors.
+
+    ### 2.1.1 Estimation Method
+
+    We used **Restricted Maximum Likelihood Estimation (REML)** to estimate the model parameters. REML was chosen because it reduces bias in the estimation of variance components, particularly for the random effects.
+
+## 2.2 Assumptions
 
 The LMM assumes:
 
--   **Linearity**: The relationship between age and MMSE is linear.
--   **Normality**: The residuals \\(\\epsilon\_{ij}\\) are normally distributed.
--   **Homoscedasticity:** The variance of residuals is constant over age.
--   **Random Effects**: The individual-specific intercepts \\( u_i\\) follow a normal distribution with mean zero and variance \\(\\sigma_u\^2\\).
+-   **Linearity**: The relationship between the predictors and the outcome variable is assumed to be linear.
+-   **Normality**: Both random effects and residual errors are assumed to be normally distributed.
+-   **Independence**: Random effects and residuals are assumed to be independent from one another.
+-   **Homoscedasticity**: The variance of residuals is assumed to be constant across all levels of the predictors.
 
-These assumptions were tested using model diagnostics, including residual plots and normality checks for random effects.
+## 2.3 Implementation
 
-**Software**\
-The analyses were conducted in **R** using the `lme4` package to fit the linear mixed model. Model diagnostics were performed to ensure that the assumptions of the model were satisfied.
+The data were preprocessed to handle any missing values before fitting the models. All analyses were conducted using the `lme4` package in **R**, and model diagnostics were performed to ensure that the assumptions of the LMM were met. Graphical representations and visual diagnostics were created using the `ggplot2` package.
