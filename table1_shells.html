@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Literature Review</title>
+<title>Empty Shells</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,19 +20,53 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="literature review_updated_files/libs/clipboard/clipboard.min.js"></script>
-<script src="literature review_updated_files/libs/quarto-html/quarto.js"></script>
-<script src="literature review_updated_files/libs/quarto-html/popper.min.js"></script>
-<script src="literature review_updated_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="literature review_updated_files/libs/quarto-html/anchor.min.js"></script>
-<link href="literature review_updated_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="literature review_updated_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="literature review_updated_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="literature review_updated_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="literature review_updated_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="table1_shells_files/libs/clipboard/clipboard.min.js"></script>
+<script src="table1_shells_files/libs/quarto-html/quarto.js"></script>
+<script src="table1_shells_files/libs/quarto-html/popper.min.js"></script>
+<script src="table1_shells_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="table1_shells_files/libs/quarto-html/anchor.min.js"></script>
+<link href="table1_shells_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="table1_shells_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="table1_shells_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="table1_shells_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="table1_shells_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -45,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Literature Review</h1>
+<h1 class="title">Empty Shells</h1>
 </div>
 
 
@@ -62,31 +96,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="goal" class="level2">
-<h2 class="anchored" data-anchor-id="goal">Goal</h2>
-<p>The purpose of this paper is to discuss and critically evaluate the use of LMMs in dealing with the numerous challenges associated with hierarchical data, missing data, and understanding fixed and random effects in correlated information structures. The review will focus on explaining how exactly LMMs have been used or can be applied at best and where precisely the usage of LMMs will provide better results over traditional linear models, which assume independence of observations that are often violated in nested or clustered samples. By examining key sources, including foundational and contemporary works by Bates, Bolker, Fox, McCulloch, Meteyard, Davies, and Starkweather, the paper seeks to highlight how LMMs offer a robust statistical framework for dealing with the challenges of real-world data. This includes their ability to estimate within-group correlations with random effects, their ability to handle missing data under the MAR mechanism, and the fact that they are well suited for fixed effects at the population level and random effects at the group and individual levels. Consequently, the review strives to show that despite the challenges posed by LMMs in identical and diverse datasets, these models are essential in generating more precise and correct approximations in various sub-disciplinary areas of ecological, psychological, and social science research. Furthermore, the review stresses the need to correctly model the random effects structure properly in order to obtain an accurate estimate and correct inference, hence the call for the continued use as well as advancement of LMMs as a standard method for analysis of hierarchical and correlated data.</p>
-</section>
-<section id="importance" class="level2">
-<h2 class="anchored" data-anchor-id="importance">Importance</h2>
-<p>A significant facet of using LMMs is the modeling issue of real-world data, which involves storing data structures, missing data, and correlated data, issues that ordinary linear models cannot solve effectively. In hierarchical data, observations again lie in clusters, which means the error terms of observations in the same cluster are often correlated, which is a violation of the assumption of independence that underpins most traditional linear models. It may result in bias in the estimates and wrong inferences and lead to high Type I error rates. Bates (2014) points out that LMMs play a crucial role in analyzing such structures through the addition of random effects that effectively capture the covariance within groups and, subsequently, the unequal variability within a group. In the same manner, Bolker (2015) states that LMMs are helpful in ecological statistics since data is repeatedly collected from different sites or at different times, which results in complicated, correlated data. The flexibility offered by LMMs to accommodate random intercepts and slopes positively impacts generalization across groups/individuals and provides better estimates and corresponding inferences.</p>
-<p>Another important field where LMMs are crucial is the issue of missing data management. Missing data is intrinsic to longitudinal and repeated measures studies arising from participant attrition or incomplete assessments. In particular, listwise deletion and mean imputation are known to result in biased estimates and decrease statistical power. Meteyard and Davies (2020) recommend using LMMs because such methods allow working with missing data under the premise of Missing at Random (MAR), using all the available information without having to exclude cases with missing values. In addition, LMMs model the correlation structure of the data and offer more accurate estimates by correcting the uncertainty due to failure than other methods. Starkweather (2010) builds on this by presenting the characteristics of LMMs in further detail and how well they are able to handle cases of different numbers of observations across participants, which is ideal in unbalanced designs. This robustness is especially helpful in areas like psychology, analysis of ecosystems, and other social sciences where data is likely to be missing. Therefore, the use of LMMs in cases of incomplete data is highly relevant to modern statistical analysis as they provide general and valid estimates of the data, thus improving the researcher’s conclusiveness.</p>
-</section>
-<section id="methods" class="level2">
-<h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p>Linear Mixed Models (LMMs) address the issues of hierarchical data by adding fixed and random effects in the model, making it possible to model nested data properly. As with fixed effects, the random effects describe the general population trends, while the random effects will measure the variability of one group or cluster compared to another, for instance, variability between individuals or study centers. According to Bates (2014), the use of LMMs permits the random intercepts and slopes that would fit variations at the different levels in the hierarchy to facilitate the modeling of the correlation within groups. This dual structure guarantees that, in the analysis process, the reliance on observations within the same group is taken into account. Consequently, the parameter rates estimated are more reliable and free from biases that could be realized when data is treated as independent. Besides, the LMMs can be used to provide efficient methods of dealing with missing data, which is a typical problem in the context of BLP (McCulloch, 1996). Listwise deletion and mean imputation procedures are not efficient and can lead to bias because they do not make proper use of the information and do not cope with the variance due to the missing values. LMMs, on the other hand, are purposefully developed to deal with missing data under the ability of Missing at Random (MAR). According to Meteyard and Davies (2020), LMMs utilize maximum likelihood estimation (MLE) or restricted maximum likelihood estimation (REML) to accord all of the available data, including incomplete cases, in the model. Besides, LMMs eliminate the problem of analyzing the coefficients with interaction fixed and random effects by articulating how variations of the population level reflect the groups’ level changes. According to Fox (2002), the researcher needs to have a clear understanding of the concepts of fixed and random effects for comparison while specifying and estimating the models. The fixed effects extend the results of the linearity identified in the whole population regarding the objects under analysis to all interested parties, while the random effects control deviations from this line within distinct groups.</p>
-</section>
-<section id="resultslimitations" class="level2">
-<h2 class="anchored" data-anchor-id="resultslimitations">Results/Limitations</h2>
-<p>The literature supports that Linear Mixed Models (LMMs) offer a versatile method for analyzing complex and nested observational structures that involve missing data and both fixed and random effects. LMMs perform exceptionally well with nested or clustered structures since they are inherently capable of handling random effects that capture within-cluster dependency while ensuring one does not fall for biases associated with traditional linear models. Bates (2014) and Bolker (2015) state that this capability improves the precision of the point estimates as well as the efficiency of inference in research areas where hierarchical data are frequent. Besides, the LMMs have the capability of utilizing all available information and addressing the uncertainty that results from missing data. For instance, Meteyard and Davies (2020) provided a clear account of how estimates obtained from maximum likelihood or restricted maximum likelihood estimation in LMMs are less biased as compared to those based on listwise deletion.</p>
-<p>However, the following are some of the limitations associated with LMMs. LMMs are rather complex as opposed to GLMMs, the specification of which and their interpretation might be problematic in some cases. The specification of random effects is critical; a poorly stipulated model may complicate or weaken the study’s results and efficiency. According to McCulloch (1996), failure to define or model random effects correctly can hide the actual fixed effects, which in turn complicates the interpretation. Moreover, since LMMs involve numerous computations, they could be computationally costly, mainly when applied to big data or when the models we want to fit contain numerous parameters, which can present practical difficulties to the researchers. According to Starkweather (2010), although LMMs are flexible in terms of analyzing complex designs, their computational requirements and the necessity of selecting proper tuning parameters may pose a challenge to some researchers, thus making them less user-friendly. Nevertheless, based on the literature review, the primary conclusion is that LMMs are an essential development in statistical modeling, providing optimal solutions to multiple data analysis problems.</p>
-<p><strong>References</strong></p>
-<p>Bates, D. (2014). Fitting linear mixed-effects models using lme4.&nbsp;<em>arXiv preprint arXiv:1406.5823</em>.</p>
-<p>Bolker, B. M. (2015). Linear and generalized linear mixed models.&nbsp;<em>Ecological statistics: contemporary theory and application</em>, 309-333.</p>
-<p>Fox, J. (2002).&nbsp;<em>An R and S-Plus companion to applied regression</em>. Sage.</p>
-<p>McCulloch, C. E. (1996). An introduction to generalized linear mixed models.</p>
-<p>Meteyard, L., &amp; Davies, R. A. (2020). Best practice guidance for linear mixed-effects models in psychological science.&nbsp;<em>Journal of Memory and Language</em>,&nbsp;<em>112</em>, 104092.</p>
-<p>Starkweather, J. (2010). Linear mixed effects modeling using R.&nbsp;<em>Unpublished Manuscript</em></p>
-</section>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the empty table structure</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Table 1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"n"</span>, <span class="st">"Gender"</span>, <span class="st">""</span>, <span class="st">"Handedness"</span>, <span class="st">"Group"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"CDR"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"Age"</span>, <span class="st">"EDUC"</span>, <span class="st">"SES"</span>, <span class="st">"MMSE"</span>, <span class="st">"eTIV"</span>, <span class="st">"nWBV"</span>, <span class="st">"ASF"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Level =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">""</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"R"</span>, <span class="st">"Converted"</span>, <span class="st">"Demented"</span>, <span class="st">"Nondemented"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Converted =</span> <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">19</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Demented =</span> <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">19</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Nondemented =</span> <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">19</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># View the empty table</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Table.1   Variable       Level Converted Demented Nondemented
+1            Variable                                           
+2                   n                                           
+3              Gender           F                               
+4                               M                               
+5          Handedness           R                               
+6               Group   Converted                               
+7                        Demented                               
+8                     Nondemented                               
+9                 CDR                                           
+10                                                              
+11                                                              
+12                                                              
+13                Age                                           
+14               EDUC                                           
+15                SES                                           
+16               MMSE                                           
+17               eTIV                                           
+18               nWBV                                           
+19                ASF                                           </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save it as a CSV</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(table1, <span class="st">"empty_table1.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 </main>
 <!-- /main column -->

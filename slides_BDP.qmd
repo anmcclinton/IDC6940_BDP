@@ -21,7 +21,7 @@ pdf-separate-fragments: true
 fig-align: center
 ---
 
-## Literature Review 
+## Literature Review
 
 -   **Linear Mixed Models**: Extend simple linear models by including both **fixed** and **random effects**, ideal for **hierarchical** and **longitudinal data** (Bruin, 2006; Bates, 2014).
 
@@ -39,7 +39,7 @@ fig-align: center
 
 -   **Robust Estimation**: Composite robust estimators improve model accuracy when handling **outliers** (Agostinelli, 2016).
 
-##  References
+## References
 
 -   Agostinelli, C., & Yohai, V. J. (2016). Composite robust estimators for linear mixed models. *Journal of the American Statistical Association*, 111(516), 1764-1774. <https://doi.org/10.1080/01621459.2015.1115358>
 
@@ -58,3 +58,9 @@ fig-align: center
 -   Gelman, A., & Hill, J. (2007). *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.
 
 -   Starkweather, J. (2010). Linear mixed effects modeling using R. Unpublished Manuscript.
+
+## Data Overview 
+
+```{r}
+
+```

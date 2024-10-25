@@ -1,0 +1,25 @@
+---
+title: "Empty Shells"
+format: html
+editor: visual
+---
+
+```{r}
+# Set up the empty table structure
+table1 <- data.frame(
+  `Table 1` = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
+  Variable = c("Variable", "n", "Gender", "", "Handedness", "Group", "", "", "CDR", "", "", "", "Age", "EDUC", "SES", "MMSE", "eTIV", "nWBV", "ASF"),
+  Level = c("", "", "F", "M", "R", "Converted", "Demented", "Nondemented", "", "", "", "", "", "", "", "", "", "", ""),
+  Converted = rep("", 19),
+  Demented = rep("", 19),
+  Nondemented = rep("", 19),
+  stringsAsFactors = FALSE
+)
+
+# View the empty table
+print(table1)
+
+# Save it as a CSV
+write.csv(table1, "empty_table1.csv", row.names = FALSE)
+
+```
