@@ -1,0 +1,265 @@
+---
+title: "The Impact of Aging on Cognitive Decline: A Longitudinal Study Using Linear Mixed Models"
+author: Adasia McClinton
+format: html
+editor: visual
+self-contained: true
+---
+
+# 1 Introduction
+
+# 2 Methods
+
+As discussed by [@brown2021], a Linear Mixed Model (LMM) is:
+
+*a parametric linear model for clustered, longitudinal, or repeated-measures data that quantifies the relationships between a continuous dependent variable and various predictor variables. LMMs typically consist of fixed-effect parameters, which are associated with one or more covariates, and random effects, which account for variability across different clusters or subjects.*
+
+In the context of this study, fixed-effect parameters describe the relationship of the covariates (such as age) to the dependent variable (MMSE score) across the entire population. Meanwhile, random effects account for individual variability across participants. This structure allows us to model both within-subject (repeated measures) and between-subject (individual) variations.
+
+The dataset used in this study contains longitudinal data, where the MMSE score, our continuous dependent variable, is measured at multiple time points for each participant. Longitudinal data often require careful handling due to issues like participant dropout, which can cause later time points to have fewer observations compared to earlier ones. Alongside this, the hierarchical nature of longitudinal data makes it suitable for analysis using LMMs, which can model such structured dependencies.
+
+## 2.1 Mathematical Foundation
+
+LMMs rely on a strong mathematical foundation based on linear algebra. The general formulation for a 2-level longitudinal model, as applied in this study, is given by the following equation:
+
+$$
+Y = X\beta + Z u + \epsilon
+$$
+
+Where:
+
+-   Y is the response vector, representing the dependent variable (MMSE scores).
+
+-   X is the design matrix for fixed effects (such as age and gender).
+
+-   \\( \\beta \\) is the vector of fixed effects, representing the population-level parameters.
+
+-   Z is the design matrix for random effects (subject-level variability).
+
+-   u is the vector of random effects, which accounts for individual variability.
+
+-   ϵ is the vector of residual errors.
+
+    ### 2.1.1 Estimation Method
+
+    We used **Restricted Maximum Likelihood Estimation (REML)** to estimate the model parameters. REML was chosen because it reduces bias in the estimation of variance components, particularly for the random effects.
+
+## 2.2 Assumptions
+
+The LMM assumes:
+
+-   **Linearity**: The relationship between the predictors and the outcome variable is assumed to be linear.
+-   **Normality**: Both random effects and residual errors are assumed to be normally distributed.
+-   **Independence**: Random effects and residuals are assumed to be independent from one another.
+-   **Homoscedasticity**: The variance of residuals is assumed to be constant across all levels of the predictors.
+
+## 2.3 Implementation
+
+The data were preprocessed to handle any missing values before fitting the models. All analyses were conducted using the `lme4` package in **R**, and model diagnostics were performed to ensure that the assumptions of the LMM were met. Graphical representations and visual diagnostics were created using the `ggplot2` package.
+
+## 2.4 Implementation in R
+
+The implementation of the LMM involved a series of steps, including initial model specification, hypothesis testing, and iterative model refinement. All analyses were conducted in R, utilizing the lme4 package, which is optimized for mixed-effects models and offers efficient handling of random effects (Bates et al., 2015). The process was divided into stages as outlined below.
+
+### **2.4.1 Hypothesis Testing**
+
+Hypothesis testing was integral to refining the model and involved assessing the significance of each predictor to guide model development. Key hypotheses tested included:
+
+-   **Hypothesis 1**: Age is a significant predictor of cognitive decline.
+
+-   **Hypothesis 2**: Dementia severity (CDR) significantly impacts MMSE scores.
+
+-   **Hypothesis 3**: Brain volume (nWBV) is associated with cognitive function.
+
+Likelihood ratio tests were used to compare nested models and evaluate the contribution of each predictor. Fixed effects that did not significantly improve model fit were considered for removal to streamline the model and improve interpretability.
+
+### **2.4.2 Model Refinement**
+
+Based on the results of hypothesis testing, non-significant fixed effects, such as age and SES, were removed from the model to achieve parsimony. The refined model retained only the significant predictors, dementia severity (CDR) and normalized brain volume (nWBV), ensuring that the model focused on the factors most strongly associated with cognitive decline. This iterative refinement process enhanced the model’s clarity and interpretability.
+
+### **2.4.3 Analysis Using lmer() Function**
+
+To finalize the analysis, the lmer() function from the lme4 package was used to fit the refined LMM. The lme4 package offers several advantages over nlme, particularly in terms of computational efficiency and the handling of crossed random effects \[@Bates2014\]. The syntax and model structure were similar to those in lme(), but lme4 allowed for faster and more stable estimation, particularly beneficial for complex longitudinal data.
+
+### **2.4.4 Final Model Selection**
+
+The final model was selected based on the results from both likelihood ratio tests and model diagnostics, which were reviewed to ensure that model assumptions were met. The final model specification included CDR and nWBV as fixed effects, with a random intercept for each subject to capture individual variability in MMSE scores. This final model provided a focused view of how dementia severity and brain volume are associated with cognitive decline, offering insights aligned with the study’s objectives.
+
+## **3 Analysis and Results**
+
+This section provides a comprehensive overview of the analytical process, including data preparation, exploratory analysis, modeling, and prediction. The primary objective is to address the research question: How do age, dementia severity, and brain structure impact cognitive decline in older adults? Using the OASIS dataset, which includes cognitive assessments and MRI data for both demented and nondemented adults, we aimed to identify the primary factors influencing cognitive decline.
+
+### **3.1 Packages**
+
+The following R packages were essential for this analysis:
+
+-   **lme4**: Used for fitting linear mixed models, which are critical for analyzing repeated measures data with both fixed and random effects. The lmer() function allowed us to include random intercepts for each subject, accounting for individual variability.
+
+-   **mice**: Used for handling missing data through multiple imputation, generating several complete datasets to improve the robustness of the findings.
+
+-   **mitml**: Employed for pooling model results across imputed datasets, ensuring reliable estimates and significance tests.
+
+-   **ggplot2**: For creating visualizations, including histograms, boxplots, QQ plots, and prediction plots, to support data exploration and result interpretation.
+
+These packages provided the necessary tools for data management, modeling, and handling missing values, which strengthened the rigor of the analysis.
+
+### **3.2 Data Preparation and Ingestion**
+
+The dataset, provided in CSV format, was loaded and examined to understand its structure. Key variables included demographic information (Age, Gender, Handedness), cognitive assessments (MMSE, CDR), and MRI metrics (eTIV, nWBV). Each row represented a single MRI session for a subject, capturing repeated visits over time, which allowed for longitudinal analysis.
+
+```{r}
+data <- read.csv("C:/IDC6940/IDC6940_BDP/oasis_longitudinal.csv")
+
+```
+
+#### **3.2.1 Handling Missing Values**
+
+Multiple imputation was applied to handle missing data in essential variables, such as MMSE, Age, and Group, ensuring that the analysis remained comprehensive and unbiased. The mice package was used to create five imputed datasets, each of which was modeled to ensure robustness against missing data.
+
+```{r}
+library(mice)
+imputed_data <- mice(data, m = 5, method = 'pmm')
+imputed_list <- lapply(1:5, function(i) complete(imputed_data, i))
+
+```
+
+#### **3.2.2 Exploratory Data Analysis**
+
+To better understand the dataset, we conducted Exploratory Data Analysis (EDA) using visualizations:
+
+1.  **Histogram of Age** (Figure 1):\
+    The histogram shows the distribution of age among participants, with a concentration in the 70–90 age range. This aligns with the study’s focus on older adults, providing a suitable sample to analyze cognitive decline in an aging population.
+
+2.  **Boxplot of MMSE by Dementia Status** (Figure 2):\
+    This boxplot displays MMSE scores across different dementia status groups (Converted, Demented, and Nondemented). The Demented group has a visibly lower median MMSE score compared to the other groups, with more variability, indicating a broader range of cognitive performance. The Nondemented group has consistently high MMSE scores, indicating preserved cognitive function. This visualization highlights the expected relationship between dementia status and cognitive decline, supporting the inclusion of dementia status as a variable in the model.
+
+3.  **QQ Plot of MMSE** (Figure 3):\
+    The QQ plot for MMSE scores shows slight deviations from normality, particularly at the lower end of the distribution. While there is some skewness, the deviation is minor, supporting the use of linear mixed modeling, which is robust to slight normality violations in large samples. This plot confirms the suitability of MMSE as a continuous variable in modeling cognitive function.
+
+```{r}
+library("ggplot2")
+# Visualize distribution of Age
+ggplot(data, aes(x = Age)) + geom_histogram(binwidth = 5) + labs(title = "Distribution of Age", x = "Age", y = "Frequency")
+
+# Boxplot of MMSE by Group (Dementia Status)
+ggplot(data, aes(x = Group, y = MMSE, fill = Group)) + geom_boxplot() + labs(title = "Boxplot of MMSE Scores by Dementia Status", x = "Group", y = "MMSE")
+
+# QQ Plot for MMSE to check normality
+ggplot(data, aes(sample = MMSE)) + stat_qq() + stat_qq_line() + labs(title = "QQ Plot of MMSE Scores")
+```
+
+### **3.3 Linear Mixed Modeling**
+
+Linear Mixed Models (LMMs) were used to explore how age, dementia severity, and brain volume impact cognitive decline, with MMSE scores as the primary outcome to measure cognitive function. The longitudinal data structure enabled us to model individual cognitive trajectories over time.
+
+#### **3.3.1 Model 0: Age as a Sole Predictor**
+
+As a baseline, we first fitted a simple model with age as the only predictor of MMSE scores, with Subject.ID as a random effect to account for individual variability. The model is expressed as follows:
+
+$$
+\text{MMSE}_{ij} = 29.660 - 0.031 \times \text{Age}_{ij} + u_{0j} + \epsilon_{ij}
+$$
+
+-   where:
+
+    -   **Intercept**: (29.660) (baseline MMSE score),
+    -   **Age coefficient**: (-0.031) (indicating a small, non-significant decline in MMSE with age),
+    -   $u_{0j}$: the random intercept for each subject, capturing individual variability,
+    -   $\epsilon_{ij}$: the residual error for each observation.
+
+```{r}
+library("lme4")
+library("mitml")
+library("Matrix")
+model0 <- lapply(imputed_list, function(data) lmer(MMSE ~ Age + (1 | Subject.ID), data = data))
+pooled_results <- testEstimates(model0, method = "D2")
+summary(pooled_results)
+
+```
+
+-   **Results**: The age effect on MMSE was small and non-significant, suggesting that age alone does not fully explain cognitive decline.
+
+#### **3.3.2 Model 1: Adding Dementia Status and SES**
+
+The second model included additional predictors—**dementia status** (Group) and **socioeconomic status** (SES)—along with an interaction between age and dementia status to explore cognitive decline differences by group. The model is expressed as:
+
+$$
+\text{MMSE}_{ij} = 34.544 - 0.070 \times \text{Age}_{ij} - 4.699 \times \text{GroupDemented}_{ij} - 0.231 \times \text{SES}_{ij} + 0.008 \times (\text{Age} \times \text{GroupDemented})_{ij} + u_{0j} + \epsilon_{ij}
+$$
+
+where:
+
+-   **Age coefficient**: -0.070,
+
+-   **GroupDemented coefficient**: -4.699 (lower baseline MMSE for demented individuals),
+
+-   **SES coefficient**: -0.231.
+
+```{r}
+model1 <- lapply(imputed_list, function(data) {
+  lmer(MMSE ~ Age * Group + SES + (1 | Subject.ID), data = data)
+})
+pooled_results <- testEstimates(model1, method = "D2")
+summary(pooled_results)
+
+```
+
+-   **Results**: This model showed no significant effects for age, SES, or age-by-group interactions, indicating that additional factors may better explain cognitive decline.
+
+#### **3.3.3 Final Model with Significant Predictors Only**
+
+The final model focused on significant predictors—**CDR (Clinical Dementia Rating)** and **nWBV (Normalized Whole Brain Volume)**. This model is expressed as:
+
+$$
+\text{MMSE}_{ij} = 17.894 - 5.441 \times \text{CDR}_{ij} + 15.038 \times \text{nWBV}_{ij} + u_{0j} + \epsilon_{ij}
+$$
+
+where:
+
+-   **CDR coefficient**: -5.441, indicating a significant decline in MMSE with increasing dementia severity,
+
+-   **nWBV coefficient**: 15.038, suggesting that higher brain volume is associated with better cognitive function.
+
+```{r}
+final_model <- lapply(imputed_list, function(data) {
+  lmer(MMSE ~ CDR + nWBV + (1 | Subject.ID), data = data)
+})
+pooled_final_results <- testEstimates(final_model, method = "D2")
+summary(pooled_final_results)
+
+```
+
+-   **Results**: CDR was significantly associated with MMSE scores, showing that higher dementia severity leads to lower cognitive function. Additionally, higher nWBV was associated with higher MMSE, supporting its role in cognitive preservation.
+
+### **3.4 Predictions and Visualizations**
+
+Using the final model, we generated predicted MMSE scores for a range of CDR and nWBV values to visualize cognitive trajectories across dementia severity and brain volume.
+
+#### **3.4.1 Predicted MMSE by Dementia Severity (CDR) and Brain Volume (nWBV)**
+
+The plot in Figure 4 shows the predicted MMSE scores across various CDR and nWBV values. As CDR increases, indicating greater dementia severity, predicted MMSE scores decline significantly. Additionally, higher nWBV values are associated with higher predicted MMSE scores, suggesting that larger brain volumes mitigate cognitive decline even as dementia severity increases.
+
+```{r}
+#Define the new data for prediction
+newdata <- expand.grid(CDR = seq(0, 2, 0.1), nWBV = seq(0.65, 0.85, 0.05))
+
+# Generate predictions for each imputed model and store them
+predictions <- sapply(final_model, function(model) predict(model, newdata = newdata, re.form = NA))
+
+# Calculate the average prediction across all imputed models
+newdata$predicted_MMSE <- rowMeans(predictions)
+
+# Plot the predicted MMSE scores
+library(ggplot2)
+ggplot(newdata, aes(x = CDR, y = predicted_MMSE, color = nWBV, group = nWBV)) +
+  geom_line(size = 1.2) +
+  scale_color_continuous(name = "Normalized Brain Volume (nWBV)") +
+  labs(title = "Predicted MMSE Scores by Dementia Severity (CDR) and Brain Volume (nWBV)",
+       x = "Clinical Dementia Rating (CDR)",
+       y = "Predicted MMSE Score") +
+  theme_minimal()
+```
+
+### **3.5 Conclusion**
+
+In summary, our analysis highlights the significant relationships between age, dementia severity, and brain structure in predicting cognitive decline as measured by MMSE scores. The final linear mixed model indicates that as dementia severity (CDR) increases, cognitive function declines markedly, underscoring the profound impact of dementia on cognitive health in older adults. Additionally, our findings suggest that larger normalized whole brain volumes (nWBV) are protective against cognitive decline, emphasizing the importance of brain health in mitigating the effects of aging and dementia. The visualizations support these findings, illustrating clear trends that reinforce the need for continued research into the factors that influence cognitive decline. Overall, these results provide valuable insights into the interplay of age, dementia status, and brain structure, contributing to a deeper understanding of cognitive health in aging populations.
