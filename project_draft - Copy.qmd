@@ -10,7 +10,7 @@ self-contained: true
 
 # 2 Methods
 
-As discussed by [@brown2021], a Linear Mixed Model (LMM) is:
+As discussed by \[@brown2021\], a Linear Mixed Model (LMM) is:
 
 *a parametric linear model for clustered, longitudinal, or repeated-measures data that quantifies the relationships between a continuous dependent variable and various predictor variables. LMMs typically consist of fixed-effect parameters, which are associated with one or more covariates, and random effects, which account for variability across different clusters or subjects.*
 
@@ -79,7 +79,7 @@ Based on the results of hypothesis testing, non-significant fixed effects, such 
 
 ### **2.4.3 Analysis Using lmer() Function**
 
-To finalize the analysis, the lmer() function from the lme4 package was used to fit the refined LMM. The lme4 package offers several advantages over nlme, particularly in terms of computational efficiency and the handling of crossed random effects \[@Bates2014\]. The syntax and model structure were similar to those in lme(), but lme4 allowed for faster and more stable estimation, particularly beneficial for complex longitudinal data.
+To finalize the analysis, the lmer() function from the lme4 package was used to fit the refined LMM. The lme4 package offers several advantages over nlme, particularly in terms of computational efficiency and the handling of crossed random effects [@Bates2014]. The syntax and model structure were similar to those in lme(), but lme4 allowed for faster and more stable estimation, particularly beneficial for complex longitudinal data.
 
 ### **2.4.4 Final Model Selection**
 
@@ -124,6 +124,57 @@ imputed_list <- lapply(1:5, function(i) complete(imputed_data, i))
 ```
 
 #### **3.2.2 Exploratory Data Analysis**
+
+```{r}
+
+# Load required package
+#install.packages("gt")
+library(gt)
+
+# Define variables and descriptions
+variables <- c(
+  "Subject_ID", "MRI_ID", "Group", "Visit", "MR_Delay", 
+  "M/F", "Hand", "Age", "EDUC", "SES", 
+  "MMSE", "CDR", "eTIV", "nWBV", "ASF"
+)
+
+descriptions <- c(
+  "A unique identifier assigned to each participant in the study.",
+  "The unique identifier for each MRI exam taken for the subject.",
+  "Indicates whether the subject belongs to the 'Demented' or 'Nondemented' group.",
+  "The visit number in the longitudinal study. Each subject may have multiple visits.",
+  "The time (in days) between the baseline visit and the MRI scan.",
+  "The gender of the participant, where 'M' represents male and 'F' represents female.",
+  "Indicates the dominant hand of the participant, where 'R' represents right-handed and 'L' represents left-handed.",
+  "The age of the participant at the time of the visit.",
+  "The number of years of education the participant has completed.",
+  "The socioeconomic status of the participant, typically measured on a scale.",
+  "Mini-Mental State Examination score, a measure of cognitive function. Higher scores indicate better cognitive performance.",
+  "Clinical Dementia Rating, a scale used to quantify the severity of symptoms of dementia.",
+  "Estimated Total Intracranial Volume, a measure of brain size obtained via MRI.",
+  "Normalized Whole Brain Volume, which represents the proportion of the brain volume relative to total intracranial volume.",
+  "Atlas Scaling Factor, a correction factor applied during brain imaging analysis to adjust for head size differences between individuals."
+)
+
+# Create a data frame for the variables and their descriptions
+variables_table <- data.frame(
+  Variable = variables,
+  Description = descriptions,
+  stringsAsFactors = FALSE
+)
+
+# Create the gt table
+variables_table %>%
+  gt() %>%
+  tab_header(
+    title = "Table 2. Variable Description"
+  ) %>%
+  tab_footnote(
+    footnote = "Each variable in the dataset, accompanied by a qualitative description from the study team.",
+    locations = cells_title(groups = "title")
+  )
+
+```
 
 To better understand the dataset, we conducted Exploratory Data Analysis (EDA) using visualizations:
 
