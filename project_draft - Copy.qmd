@@ -1,6 +1,7 @@
 ---
 title: "The Impact of Aging on Cognitive Decline: A Longitudinal Study Using Linear Mixed Models"
 author: Adasia McClinton
+bibliography: references.bib
 format: html
 editor: visual
 self-contained: true
@@ -8,9 +9,51 @@ self-contained: true
 
 # 1 Introduction
 
+Cognitive decline in aging populations is a critical concern for researchers in neuroscience, psychology, and public health. As the global population ages, understanding the factors that contribute to cognitive deterioration becomes increasingly vital for developing effective interventions. Cognitive decline is not uniform; it is influenced by various demographic, health, and socioeconomic factors, which interact in complex ways. Consequently, traditional statistical methods, such as linear regression and ANOVA, often fall short in accurately modeling these dynamics due to their inability to handle hierarchical and correlated data structures.
+
+Linear Mixed Models (LMMs) have emerged as a powerful statistical tool for analyzing such complex data. Unlike traditional methods, LMMs can accommodate both fixed effects, which capture population-level trends, and random effects, which account for individual or group-level variability. This dual capability allows LMMs to model intra-individual and inter-individual differences simultaneously, making them particularly suited for longitudinal and hierarchical datasets. Bates (2014) underscores the utility of LMMs in capturing within-group correlations and managing data with unequal numbers of observations across participants.
+
+LMMs also excel in handling missing data, a common challenge in longitudinal studies. Traditional approaches, such as listwise deletion and mean imputation, risk introducing bias and reducing statistical power. However, Meteyard and Davies (2020) highlight that LMMs effectively address missing data under the Missing at Random (MAR) assumption by utilizing maximum likelihood estimation (MLE) or restricted maximum likelihood estimation (REML). This enables researchers to include all available data, enhancing the accuracy of their findings.
+
+The application of LMMs spans various disciplines, including psychology, ecology, and medicine. In ecological studies, Bolker (2015) illustrates how LMMs manage data collected across multiple sites and time periods, providing nuanced insights into environmental processes. In psychology, LMMs are employed to analyze repeated measures data, capturing the complexities of cognitive processes over time. These models also play a crucial role in medical research, where they are used to study longitudinal health outcomes, such as changes in cognitive function and quality of life in patients with chronic conditions.
+
+This study leverages the strengths of LMMs to investigate the relationship between aging and cognitive function, focusing on Mini-Mental State Examination (MMSE) scores. Specifically, it explores how age, dementia status, and socioeconomic factors interact to influence cognitive decline. By modeling these interactions, this research aims to provide a comprehensive understanding of the trajectories of cognitive aging across different demographic groups.
+
+The findings of this study have important implications for public health and clinical practice. Understanding the patterns and predictors of cognitive decline can inform the development of targeted interventions to slow cognitive deterioration, particularly in vulnerable populations. This research contributes to the broader effort to address the challenges posed by an aging population, emphasizing the importance of advanced statistical methods like LMMs in capturing the complexity of real-world data.
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE, collapse=TRUE}
+#install.packages("tableone")
+library(tableone)
+library (rmarkdown)
+library(bibtex)
+
+#install.packages("readr")
+library(readr)
+
+oasis_longitudinal <- read_csv("C:/IDC6940/IDC6940_BDP/oasis_longitudinal.csv")
+
+# Load necessary library
+library(tableone)
+
+# Recode M/F for easier handling in Table 1 (optional)
+oasis_longitudinal$Gender <- ifelse(oasis_longitudinal$'M/F' == "M", "Male", "Female")
+
+# Define the variables to be included in Table 1
+vars <- c("Age", "Gender", "Hand", "EDUC", "SES", "MMSE", "CDR", "eTIV", "nWBV", "ASF")
+
+# Define the stratifying variable (Group)
+strata <- "Group"
+
+# Create Table One
+table1 <- CreateTableOne(vars = vars, strata = strata, data = oasis_longitudinal, factorVars = c("Gender", "Hand", "CDR"))
+
+# Print the table with p-values
+print(table1, showAllLevels = TRUE, smd = TRUE)
+```
+
 # 2 Methods
 
-As discussed by \[@brown2021\], a Linear Mixed Model (LMM) is:
+As discussed by @brown2021, a Linear Mixed Model (LMM) is:
 
 *a parametric linear model for clustered, longitudinal, or repeated-measures data that quantifies the relationships between a continuous dependent variable and various predictor variables. LMMs typically consist of fixed-effect parameters, which are associated with one or more covariates, and random effects, which account for variability across different clusters or subjects.*
 
@@ -79,7 +122,7 @@ Based on the results of hypothesis testing, non-significant fixed effects, such 
 
 ### **2.4.3 Analysis Using lmer() Function**
 
-To finalize the analysis, the lmer() function from the lme4 package was used to fit the refined LMM. The lme4 package offers several advantages over nlme, particularly in terms of computational efficiency and the handling of crossed random effects [@Bates2014]. The syntax and model structure were similar to those in lme(), but lme4 allowed for faster and more stable estimation, particularly beneficial for complex longitudinal data.
+To finalize the analysis, the lmer() function from the lme4 package was used to fit the refined LMM. The lme4 package offers several advantages over nlme, particularly in terms of computational efficiency and the handling of crossed random effects @Bates2014. The syntax and model structure were similar to those in lme(), but lme4 allowed for faster and more stable estimation, particularly beneficial for complex longitudinal data.
 
 ### **2.4.4 Final Model Selection**
 
@@ -125,7 +168,7 @@ imputed_list <- lapply(1:5, function(i) complete(imputed_data, i))
 
 #### **3.2.2 Exploratory Data Analysis**
 
-```{r}
+```{r, warning=FALSE, echo=FALSE, message=FALSE, collapse=TRUE}
 
 # Load required package
 #install.packages("gt")
@@ -314,3 +357,19 @@ ggplot(newdata, aes(x = CDR, y = predicted_MMSE, color = nWBV, group = nWBV)) +
 ### **3.5 Conclusion**
 
 In summary, our analysis highlights the significant relationships between age, dementia severity, and brain structure in predicting cognitive decline as measured by MMSE scores. The final linear mixed model indicates that as dementia severity (CDR) increases, cognitive function declines markedly, underscoring the profound impact of dementia on cognitive health in older adults. Additionally, our findings suggest that larger normalized whole brain volumes (nWBV) are protective against cognitive decline, emphasizing the importance of brain health in mitigating the effects of aging and dementia. The visualizations support these findings, illustrating clear trends that reinforce the need for continued research into the factors that influence cognitive decline. Overall, these results provide valuable insights into the interplay of age, dementia status, and brain structure, contributing to a deeper understanding of cognitive health in aging populations.
+
+# 4 References
+
+Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting linear mixed-effects models using lme4. *arXiv preprint*. https://doi.org/10.48550/arXiv.1406.5823
+
+Brown, V. A. (2021). An introduction to linear mixed-effects modeling in R. *Advances in Methods and Practices in Psychological Science, 4*(1), 1–19. https://doi.org/10.1177/2515245920960351
+
+Harris, J. (2019). *The great fear*. Oxford University Press.
+
+Jaccard, J. J., Turrisi, R., & Wan, C. K. (2003). *Interaction effects in multiple regression* (2nd ed.). SAGE Publications.
+
+McCulloch, C. E. (1996). An introduction to generalized linear mixed models. In *NSF-CBMS Regional Conference Series in Probability and Statistics* (Vol. 7). <https://doi.org/10.1214/lnms/1215451825>
+
+Meteyard, L., & Davies, R. A. I. (2020). Best practice guidance for linear mixed-effects models in psychological science. *Journal of Memory and Language, 112*, 104092. https://doi.org/10.1016/j.jml.2020.104092
+
+Starkweather, J. (2010). Linear mixed effects modeling using R. *Unpublished Manuscript*. <https://doi.org/10.13140/RG.2.1.3420.4240>

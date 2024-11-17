@@ -108,8 +108,7 @@ This project applies LMMs to investigate:
 
 ## R script for Table One {.smaller}
 
-```{r, warning=FALSE, echo=T, message=FALSE, result ='hide'}
-
+```{r}
 #install.packages("tableone")
 library(tableone)
 
@@ -365,7 +364,7 @@ abline(lm(y ~ x, data = oasis_longitudinal), col = "blue", lwd = 2)
 
 ```
 
-# Age as a Predictor of Cognitive Decline
+# The Role of Age in Predicting Cognitive Decline: An Analysis Using MMSE Scores
 
 By: Adasia McClinton
 
@@ -418,9 +417,8 @@ summary(pooled_results)
 
     $$\text{MMSE}_{ij} = 34.544 - 0.070 \times \text{Age}_{ij} - 4.699 \times \text{GD}_{ij} - 0.231 \times \text{SES}_{ij} + 0.008 \times (\text{Age} \times \text{GD})_{ij} + u_{0j} + \epsilon_{ij}$$
 
-```{=html}
 <!-- -->
-```
+
 -   **Age Coefficient**: -0.070 (non-significant decline).
 
 -   **CDR Coefficient**: -4.699 (significant decline in MMSE).
@@ -488,6 +486,373 @@ summary(pooled_final_results)
 -   Dementia severity (CDR) is a strong negative predictor.
 
 -   Higher brain volumes (nWBV) are protective against cognitive decline.
+
+# Brain Volume: The Role of Age and Socioeconomic Status
+
+By: Preethi R.
+
+## Fitting the Linear Mixed Model: {.smaller}
+
+-   Outcome: nWBV (Normalized Whole Brain Volume) – representing structural brain changes over time.
+
+-   Primary Predictor: Age to see if aging correlates with changes in brain volume.
+
+-   Secondary Predictor: Socioeconomic Status (SES) to observe if socioeconomic factors impact brain volume over time.
+
+-   Fixed Effects: Age and Socioeconomic Status (SES).
+
+-   Random Effects: Subject.ID.
+
+The linear mixed model used in this analysis is given by:
+
+$$
+\text{nWBV}{ij} = \beta_0 + \beta_1 \cdot \text{Age}{ij} + \beta_2 \cdot \text{SES}{ij} + \mu_{i} + \epsilon_{ij}
+$$
+
+Where:
+
+-   $nWBV_{ij}$ : Normalized whole brain volume for subject (i) at time (j).
+
+-   $\beta_0$ : Overall intercept (fixed effect).
+
+-   $\beta_1$ : Fixed effect of Age.
+
+-   $\beta_2$ : Fixed effect of SES.
+
+-   $\mu_{i}$ : Random intercept for each subject.
+
+-   $\epsilon_{ij}$ : Residual error term.
+
+## METHODOLOGY {.smaller}
+
+<br>
+
+The most common method used in fitting linear mixed models are:
+
+<br>
+
+**1. Maximum Likelihood Estimation (MLE)**:
+
+-   it determines the parameters under which the observed data is most probable.
+
+-   estimates both the fixed effects (population-level parameters) and variance components (random effects and residual variances) by maximizing the likelihood of the observed data.
+
+<br>
+
+**2. Restricted Maximum Likelihood Estimation (REML)** :
+
+-   maximizes the likelihood of the data after adjusting for the fixed effects, focusing on variance components estimation.
+
+-   less biased because it adjusts for the loss of degrees of freedom caused by estimating fixed effects.
+
+## Data Cleaning:
+
+<br>
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+#install.packages("readr")
+library(readr)
+
+oasis_data <- read_csv("oasis_longitudinal.csv")
+
+# Remove duplicate rows
+oasis_data <- oasis_data[!duplicated(oasis_data), ]
+
+# Remove rows with missing values
+oasis_data <- na.omit(oasis_data)
+
+# View cleaned data
+head(oasis_data)
+```
+
+## 1. Age as the only predictor
+
+<br>
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+#install.packages("lme4")
+library(lme4)
+oasis_data$gender <- oasis_data$'M/F'
+oasis_data$SubjectID <- oasis_data$'Subject ID'
+
+# Fit the linear mixed model with only Age as the predictor, reml
+model <- lmer(nWBV ~ Age + (1 | SubjectID), data = oasis_data)
+summary(model)
+```
+
+## equation and interpretation of age as the only predictor {.smaller}
+
+<br>
+
+the linear mixed equation is: $$
+\text{nWBV}{ij} = 0.9978 - 0.0035 \cdot \text{Age}{ij} + \mu_{i} + \epsilon_{ij}
+$$
+
+where:
+
+• 0.9978 is the fixed intercept, representing the average baseline nWBV when Age is 0.
+
+• -0.0035 is the fixed effect estimate for Age, indicating that for each additional year of age, the nWBV decreases by approximately 0.0035 units on average.
+
+<br>
+
+**INTERPRETATION**:
+
+-   age has a significant negative effect on nWBV
+
+-   t-value for Age = -15.78
+
+-   this shows a strong association between age and decreasing nWBV.
+
+## 2.Age and Socio-Economic status as predictors
+
+<br>
+
+-   lmer function uses REML unless specified otherwise.
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+# Fit Linear Mixed Model with Age and Socio Economic status as the predictors
+model <- lmer(nWBV ~ Age + SES + (1 | SubjectID), data = oasis_data)
+summary(model)
+```
+
+## equation and interpreation of age and ses: {.smaller}
+
+<br>
+
+The model equation: $$
+\text{nWBV}{ij} = 0.9956 - 0.0035 \cdot \text{Age}{ij} + 0.0009 \cdot \text{SES}{ij} + \mu_{i} + \epsilon_{ij}
+$$ where:
+
+• 0.9956 is the intercept, representing the estimated nWBV when both Age and SES are 0.
+
+• -0.0035 is the coefficient for Age, indicating that each additional year of age is associated with an average decrease in nWBV by approximately 0.0035 units.
+
+• 0.0009 is the coefficient for SES, suggesting that for each unit increase in SES, there is a slight positive association with nWBV, though it is not statistically significant (t-value = 0.366).
+
+<br>
+
+**INTERPRETATION**
+
+-   Age
+
+    -   strong, statistically significant negative effect on nWBV
+
+    -   consistent with prior findings (t-value of -15.761)
+
+-   SES
+
+    -   small positive effect on nWBV as t-value = 0.366
+
+    -   SES may not contribute meaningfully to explaination of variation in nWBV in this model.
+
+## Maximum Likelihood (predictors: age and ses)
+
+<br>
+
+R script for MLE :
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+# Fit the model with ML for model comparison
+model_ml <- lmer(nWBV ~ Age + SES + (1 | SubjectID), data = oasis_data, REML = FALSE)
+summary(model_ml)
+```
+
+## Interpretation for Maximum Likelihood: {.smaller}
+
+-   Random Effects:
+
+    -   (Intercept) Variance: 0.0009979 (SD: 0.0316) This is the variability in nWBV across different subjects.
+
+    -   Residual Variance: 0.00006953 (SD: 0.00834) This is the remaining variance in nWBV after accounting for both fixed and random effects.
+
+<br>
+
+-   Fixed Effects:
+
+    -   *Intercept*: 0.9952. likely represents an estimated baseline close to 1.
+
+    -   *Age*: -0.00348. nWBV decreases with increasing age.
+
+        -   for each one-unit increase in Age, nWBV is expected to decrease by about 0.00348 units, holding SES constant.
+
+    -   *t value*: -15.804 (a high magnitude t-value) - Age is statistically significant
+
+    -   *SES*: 0.00088. This positive coefficient suggests that as SES increases, there’s a very slight increase in nWBV.
+
+        -   low t-value (0.369), SES may not have a statistically significant effect on nWBV in this model.
+
+<br>
+
+**INTERPRETATION**
+
+*Age* is a *significant predictor* of nWBV,
+
+-   with a negative effect indicating cognitive decline as age increases.
+
+*SES* appears to have little to *no significant* effect on nWBV based on this model.
+
+## Comparison of the two methods:
+
+<br>
+
+• *Fixed Effects*: The estimates for Age and SES under REML are nearly identical to those under ML, showing consistent results.
+
+• **Age** has a significant negative impact on nWBV, indicating **cognitive decline with age**.
+
+• **SES** appears to have little to **no significant effect on nWBV**.
+
+<br> <br>
+
+In summary,
+
+-   REML is appropriate for final model interpretation as it provides the better estimates for variance components,
+
+-   while both methods confirm Age as a key predictor of nWBV decline.
+
+# Modeling CDR: Dementia and Education
+
+By: Bess T.
+
+## Fitting the Linear Mixed Model: {.smaller}
+
+-   Outcome: CDR (Clinical Dementia Rating) – Examining dementia severity over time.
+
+-   Primary Predictor: Dementia Status (Demented vs. Nondemented) to explore how dementia impacts CDR progression.
+
+-   Secondary Predictor: Education Level (EDUC) to assess if education affects dementia severity.
+
+-   Fixed Effects: Dementia Status and Education Level (EDUC).
+
+-   Random Effects: Subject.ID.
+
+The linear mixed model used in this analysis is given by:
+
+$$
+\text{CDR}{ij} = \beta_0 + \beta_1 \cdot \text{Dementia_Status}{ij} + \beta_2 \cdot \text{EDUC}{ij} + \mu_{i} + \epsilon_{ij}
+$$
+
+Where:
+
+-   $CDR_{ij}$ : Clinical Dementia Rating for subject (i) at time (j).
+
+-   $\beta_0$ : Overall intercept (fixed effect).
+
+-   $\beta_1$ : Fixed effect of Dementia Status.
+
+-   $\beta_2$ : Fixed effect of Education Level.
+
+-   $\mu_{i}$ : Random intercept for each subject.
+
+-   $\epsilon_{ij}$ : Residual error term.
+
+## Data Cleaning:
+
+<br>
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+#install.packages("readr")
+library(readr)
+
+oasis_data <- read_csv("oasis_longitudinal.csv")
+
+# Remove duplicate rows
+oasis_data <- oasis_data[!duplicated(oasis_data), ]
+
+# Remove rows with missing values
+oasis_data <- na.omit(oasis_data)
+
+# View cleaned data
+head(oasis_data)
+```
+
+## 1. Dementia Status as the only predictor
+
+<br>
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+#install.packages("lme4")
+
+library(lme4)
+oasis_data$Group <- factor(oasis_data$Group)
+oasis_data$SubjectID <- oasis_data$'Subject ID'
+
+# Fit the linear mixed model with only Dementia Status as the predictor, reml
+model <- lmer(CDR ~ Group + (1 | SubjectID), data = oasis_data)
+summary(model)
+```
+
+## equation and interpretation of Dementia Status as the only predictor {.smaller}
+
+<br>
+
+the linear mixed equation is: $$
+\text{CDR}{ij} = 0.2506 + 0.4225 \cdot \text{Demented}{ij} - 0.2461 \cdot \text{Nondemented}{ij} + \mu_{i} + \epsilon_{ij}
+$$
+
+where:
+
+• If the group is "Demented", the coefficient for Group Demented is used.
+
+• If the group is "Nondemented", the coefficient for Group Nondemented is used.
+
+• If the group is the baseline (which is typically "Other" or the group not specifically named in the output), then no extra term is added for Group.
+
+<br>
+
+**INTERPRETATION**:
+
+• The coefficient for Group Demented (0.4225) indicates that, on average, individuals in the "Demented" group have a higher CDR score by 0.4225 compared to the baseline group.
+
+• The coefficient for Group Nondemented (-0.2461) indicates that, on average, individuals in the "Nondemented" group have a lower CDR score by 0.2461 compared to the baseline group.
+
+• t-value for Demented = 8.597
+
+• t-value for Nondemented = -5.150
+
+• This shows a strong association between Dementia Status and CDR.
+
+## 2.Age and Socio-Economic status as predictors
+
+<br>
+
+-   lmer function uses REML unless specified otherwise.
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+# Fit Linear Mixed Model with Age and Socio Economic status as the predictors
+model <- lmer(CDR ~ Group + EDUC + (1 | SubjectID), data = oasis_data)
+summary(model)
+```
+
+## equation and interpreation of Dementia Status and Education Level: {.smaller}
+
+<br>
+
+The model equation: $$
+\text{CDR}{ij} = 0.1499 + 0.4318 \cdot \text{Demented}{ij} - 0.2455 \cdot \text{Nondemented}{ij} + - 0.0066 \cdot \text{EDUC}{ij} + \mu_{i} + \epsilon_{ij}
+$$ <br>
+
+**INTERPRETATION**
+
+• The coefficient for Group Demented (0.4318) indicates that, on average, individuals in the "Demented" group have a higher CDR score by 0.4318 compared to the baseline group.
+
+• The coefficient for Group Nondemented (-0.2455) indicates that, on average, individuals in the "Nondemented" group have a lower CDR score by 0.2455 compared to the baseline group.
+
+• The coefficient for Education Level (0.0066), for each additional year of education, a subject's CDR score increases by 0.00661 units on average.
+
+• t-value for Demented = 8.725
+
+• t-value for Nondemented = -5.153
+
+• t-value for EDUC = 1.345
+
+## Conclusion
+
+<br>
+
+• Dementia Status (Group) is strongly associated with CDR.
+
+• Education (EDUC) has a small, positive association with CDR, but this effect is not statistically significant (the t-value of 1.345 is below the typical threshold for significance).
 
 ## References
 
