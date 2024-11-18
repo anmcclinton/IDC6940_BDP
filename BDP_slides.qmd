@@ -729,7 +729,7 @@ By: Bess T.
 The linear mixed model used in this analysis is given by:
 
 $$
-\text{CDR}{ij} = \beta_0 + \beta_1 \cdot \text{Dementia_Status}{ij} + \beta_2 \cdot \text{EDUC}{ij} + \mu_{i} + \epsilon_{ij}
+\text{CDR}{ij} = \beta_0 + \beta_1 \cdot \text{DementiaStatus}{ij} + \beta_2 \cdot \text{EDUC}{ij} + \mu_{i} + \epsilon_{ij}
 $$
 
 Where:
